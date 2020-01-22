@@ -1,8 +1,8 @@
 
 
-
 // variables
 var titles = []
+var languages = ["PHP", "Java", "HTML, CSS", "JavaScript", "C++", "ASP.net"];
 
 // function containing ajax call
 function getFrameworkInfo(wikipediaTableHeaderName, cb) {
@@ -40,7 +40,6 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
 
 
 
-var languages = ["PHP", "Java", "HTML, CSS", "JavaScript", "C++"];
 
 function createButtons(array) {
     var body = $("#mainBody")
@@ -64,6 +63,7 @@ createButtons(languages)
 $(".button").click(function (event) {
     event.preventDefault();
     titles = [];
+    $("#table").empty()
     var id = $(event.target).attr("id");
 
     getFrameworkInfo(id, function (results) {
@@ -74,11 +74,13 @@ $(".button").click(function (event) {
 
         console.log(titles)
 
-        titles.forEach(function (i) {
-            var frameworkTitle = $("<h1>");
+        titles.forEach( function (item, i) {
+            var frameworkTitle = $("<a>").text(titles[i].name).attr("href", titles[i].link);
+            $(frameworkTitle).attr("id", titles[i].name);
 
-            frameworkTitle.text(titles.name)
-            console.log(frameworkTitle);
+            $("#table").append(frameworkTitle)
+           
+            console.log(titles[i].name);
         })
     });
 

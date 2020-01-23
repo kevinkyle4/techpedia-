@@ -18,7 +18,7 @@ function query1() {
 
 function query2() {
 
-var queryURL2 = "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&titles=File:Flask logo.svg&prop=imageinfo&iiprop=url&format=json";
+var queryURL2 = "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&titles=File:React-icon.svg&prop=imageinfo&iiprop=url&format=json";
 
 $.ajax({
     url: queryURL2,
@@ -26,8 +26,9 @@ $.ajax({
 }).then(function (response) {
 
 var imgURL = (response.query.pages[-1].imageinfo[0].url)
+console.log(imgURL)
 
-var iconid = $("#icon-image");
+var iconid = $("#img-logo");
 iconid.attr('src', imgURL);
 
 });

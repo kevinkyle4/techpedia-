@@ -30,13 +30,17 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
                 var currentRow = $(this).find("th:nth-child(1)");
                 var frameworkName = currentRow.text();
                 var frameworkLink = "https://en.wikipedia.org" + currentRow.children("a").attr("href");
+                var frameworkTitle = "https://en.wikipedia.org" + currentRow.children("a").attr("title");
+
                 frameworkInfo.push({
                     name: frameworkName,
-                    link: frameworkLink
+                    link: frameworkLink,
+                    title: frameworkTitle.replace("https://en.wikipedia.org", "")
                 });
 
             }
         });
+        console.log(frameworkInfo)
         cb(frameworkInfo);
     });
 
@@ -123,7 +127,7 @@ $(".button").click(function (event) {
 
         titles.forEach(function (item, i) {
             var frameworkTitle = $("<tr>").text(titles[i].name).attr("href", titles[i].link);
-            $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework")
+            $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework").attr("title", titles[i].title)
 
             $("#table").append(frameworkTitle);
 
@@ -149,8 +153,6 @@ $("#table").on("click", ".framework", function () {
             $("#row"+[i]).append(tableTitle);
             $("#row"+[i]).append(tableInfo);
 
-
-            console.log("hi")
         })
     })
 })

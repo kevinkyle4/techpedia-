@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .button {
     background-color: #B4B4B4;
     font-size: 40px;
@@ -19,3 +20,9 @@
     left: 0;
     right: 0;
   }
+=======
+#img-logo {
+    height: 200px;
+    width: 200px;
+}
+>>>>>>> 3a3fe3ac7682f99763b1931a27fbd281a985eac3

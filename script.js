@@ -140,9 +140,6 @@ $("#table").on("click", ".framework", function () {
     var frameworkLink = $(this).attr("href")
     getFrameworkTable(frameworkLink, function () {
 
-
-        console.log(tableInfoArray)
-
         tableInfoArray.forEach(function (item, i) {
             var row =$("<tr>").attr("id", "row"+[i])
             var tableTitle = $("<th>").text(tableInfoArray[i].title);

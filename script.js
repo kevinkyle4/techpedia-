@@ -148,11 +148,11 @@ $("#table").on("click", ".framework", function () {
             var row =$("<tr>").attr("id", "row"+[i])
             var tableTitle = $("<th>").text(tableInfoArray[i].title);
             var tableInfo = $("<td>").text(tableInfoArray[i].info);
-
             $("#table").append(row);
             $("#row"+[i]).append(tableTitle);
             $("#row"+[i]).append(tableInfo);
-
+            
         })
+        
     })
 })

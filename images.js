@@ -9,8 +9,8 @@ function query1() {
     }).then(function (response) {
 
  
-        // var imageFile = (response.query.pages[72038].images[7]);
-        // return(imageFile);
+        var imageFile = (response.query.pages[72038].images[0]);
+        return(imageFile);
     
 });
 };

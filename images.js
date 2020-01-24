@@ -31,7 +31,7 @@ $("#table").on("click", ".framework", function () {
             console.log("imageUrl: ")
             console.log(imageUrl);
             var frameworkLogo = $("<img>").attr("src", imageUrl)
-            $("#table").(frameworkLogo)
+            $("#table").prepend(frameworkLogo)
 
         })
     });

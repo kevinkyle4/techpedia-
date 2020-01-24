@@ -46,6 +46,19 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
 
 }
 
+function testing() {
+    // var queryURL = "https://cors-anywhere.herokuapp.com/https://www.wikipedia.org/w/api.php?action=query&format=json&prop=images&titles=c%20%20"
+    var frameWorkName = "laravel"
+    var newQuery = "https://api.github.com/orgs/" + frameWorkName + "/repos"
+    $.ajax({
+        url: newQuery,
+        method: "GET"
+    }).then(function (response) {
+        console.log(response[0].stargazers_count)
+    });
+}
+testing();
+
 // function that creates our framework tables
 function getFrameworkTable(frameworkLink, cb) {
     //everything inside of this function works
@@ -145,14 +158,14 @@ $("#table").on("click", ".framework", function () {
     getFrameworkTable(frameworkLink, function () {
 
         tableInfoArray.forEach(function (item, i) {
-            var row =$("<tr>").attr("id", "row"+[i])
+            var row = $("<tr>").attr("id", "row" + [i])
             var tableTitle = $("<th>").text(tableInfoArray[i].title);
             var tableInfo = $("<td>").text(tableInfoArray[i].info);
             $("#table").append(row);
-            $("#row"+[i]).append(tableTitle);
-            $("#row"+[i]).append(tableInfo);
-            
+            $("#row" + [i]).append(tableTitle);
+            $("#row" + [i]).append(tableInfo);
+
         })
-        
+
     })
 })

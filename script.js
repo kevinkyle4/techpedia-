@@ -1,7 +1,8 @@
 // variables
 var titles = []
 var tableInfoArray = []
-
+var linkDisplay = $("#wikilink")
+linkDisplay.css("display","none")
 // functions containing ajax calls //
 
 // function that creates our list of frameworks
@@ -29,7 +30,6 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
                 var frameworkName = currentRow.text();
                 var frameworkLink = "https://en.wikipedia.org" + currentRow.children("a").attr("href");
                 var frameworkTitle = "https://en.wikipedia.org" + currentRow.children("a").attr("title");
-                
                 frameworkInfo.push({
                     name: frameworkName,
                     link: frameworkLink,
@@ -81,7 +81,7 @@ function getFrameworkTable(frameworkLink, cb) {
             //get the text content of each row that we found
             var currentRowTitle = $(this).find("th").text();
             var currentRowInfo = $(this).find("td").text()
-
+            
             
             if (currentRowTitle != "" && currentRowInfo != "") {
                 tableInfoArray.push({
@@ -90,7 +90,7 @@ function getFrameworkTable(frameworkLink, cb) {
                 });
                 
             }
-
+            
         });
         
         cb(tableInfoArray);
@@ -114,11 +114,11 @@ function createButtons(array1, array2) {
         var button = $("<button>").text(array1[i]);
         var image = $("<img>").attr("src", array2[i])
         var buttonDiv = $("<div>").attr("class", "")
-
+        
         button.attr("id", array1[i])
         image.attr("class", "button").css("max-height", "+=150").css("max-width","+=180").css("min-height", "+=150").css("min-width",   )
         button.attr("class", "button")
-
+        
         body.append(buttonDiv)
         buttonDiv.append(image)
         buttonDiv.append("<br>")
@@ -141,28 +141,28 @@ $(".button").click(function (event) {
     event.preventDefault();
     titles = [];
     $("#table").empty()
-
+    
     var id = $(event.target).attr("id");
-
+    
     getFrameworkInfo(id, function (results) {
-
+        
         results.forEach(function (result) {
             titles.push(result);
         });
-
+        
         titles.forEach(function (item, i) {
 
             if (titles[i].name != null) {
                 var frameworkTitle = $("<tr>").text(titles[i].name).attr("href", titles[i].link);
                 $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework").attr("title", titles[i].title)
-
+                
                 $("#table").append(frameworkTitle);
             }
-
+            
         })
     });
-
-
+    
+    
 })
 
 // creates a table of basic information based on framework selected.
@@ -170,9 +170,10 @@ $("#table").on("click", ".framework", function () {
     $("#table2").empty()
     $(".middle").empty()
 
-
+    
     var frameworkLink = $(this).attr("href")
     getFrameworkTable(frameworkLink, function () {
+        linkDisplay.attr("href", frameworkLink).css("display", "")
 
         tableInfoArray.forEach(function (item, i) {
             var row = $("<tr>").attr("id", "row" + [i]).attr("class", "tabledata")
@@ -181,9 +182,9 @@ $("#table").on("click", ".framework", function () {
             $("#table2").append(row);
             $("#row" + [i]).append(tableTitle);
             $("#row" + [i]).append(tableInfo);
-
+            
         })
-
+        
     })
 })
 

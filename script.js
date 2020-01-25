@@ -1,7 +1,6 @@
 // variables
 var titles = []
 var tableInfoArray = []
-var languages = ["PHP", "Java", "HTML, CSS", "JavaScript", "C++", "Python"];
 
 // functions containing ajax calls //
 
@@ -17,10 +16,11 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
         var html = $(res);
         //use the param to create an id tag
         var id = "#" + wikipediaTableHeaderName.replace(" ", "_");
+        console.log(id)
         var javaHeader = html.find(id);
         var javaTableRows = javaHeader.parent().next().next().children("tbody").children("tr");
         console.log(html)
-
+        
         javaTableRows.each(function (i) {
             //skip the first header that says "Project"
             if (i != 0) {
@@ -29,7 +29,7 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
                 var frameworkName = currentRow.text();
                 var frameworkLink = "https://en.wikipedia.org" + currentRow.children("a").attr("href");
                 var frameworkTitle = "https://en.wikipedia.org" + currentRow.children("a").attr("title");
-
+                
                 frameworkInfo.push({
                     name: frameworkName,
                     link: frameworkLink,
@@ -40,14 +40,14 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
         });
         cb(frameworkInfo);
     });
-
+    
 }
 
 // function that creates our stargazer statistic 
 function testing(frameWorkName, cb) {
 
     var newQuery = "https://api.github.com/orgs/" + frameWorkName + "/repos"
-
+    
     $.ajax({
         url: newQuery,
         method: "GET"
@@ -63,7 +63,7 @@ function getFrameworkTable(frameworkLink, cb) {
     //everything inside of this function works
     var queryURL = "https://cors-anywhere.herokuapp.com/" + frameworkLink
     tableInfoArray = []
-
+    
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -75,49 +75,63 @@ function getFrameworkTable(frameworkLink, cb) {
         var infoTable = html.find(tableClass);
         var infoTableHeader = html.find(".summary").text()
         var infoTableRows = infoTable.children("tbody").children("tr")
-
+        
         infoTableRows.each(function (i) {
-
+            
             //get the text content of each row that we found
             var currentRowTitle = $(this).find("th").text();
             var currentRowInfo = $(this).find("td").text()
 
-
+            
             if (currentRowTitle != "" && currentRowInfo != "") {
                 tableInfoArray.push({
                     title: currentRowTitle,
                     info: currentRowInfo
                 });
-
+                
             }
 
         });
-
+        
         cb(tableInfoArray);
-
+        
     });
-
+    
 }
 
 
 // Functions without ajax calls
 
 // function that dynamically creates our buttons on load
-function createButtons(array) {
+var languages = ["PHP", "Java", "HTML, CSS", "JavaScript", "C++", "Python"];
+var logoImagesArray = ["https://i.ibb.co/KXZ8v0F/download-5.png", "https://i.ibb.co/z71GRWt/download-9.png", "https://i.ibb.co/FVCY1k4/download-7.png",  "https://i.ibb.co/MpWbHXK/download-8.png", "https://i.ibb.co/x2Fz2Jv/download-3.png", "https://i.ibb.co/x5v3MgT/download-5.jpg"];
+
+
+function createButtons(array1, array2) {
     var body = $("#mainBody")
+    
+    $(array1).each(function (i) {
+        var button = $("<button>").text(array1[i]);
+        var image = $("<img>").attr("src", array2[i])
+        var buttonDiv = $("<div>").attr("class", "")
 
-    $(array).each(function (i) {
-        var button = $("<button>").text(array[i])
-        button.attr("id", array[i])
+        button.attr("id", array1[i])
+        image.attr("class", "button").css("max-height", "+=150").css("max-width","+=180").css("min-height", "+=150").css("min-width",   )
         button.attr("class", "button")
-        body.append(button)
 
+        body.append(buttonDiv)
+        buttonDiv.append(image)
+        buttonDiv.append("<br>")
+        buttonDiv.append(button)
+
+        
+        
     })
-
+    
 }
 
 
-createButtons(languages)
+createButtons(languages, logoImagesArray)
 
 
 // event listeners //
@@ -178,7 +192,7 @@ $("#table").on("click", ".framework", function (e) {
     testing(currentEl, function (response) {
 
         var rating = $("<div>")
-        var starsEl = $("<div>").text(response)
+        var starsEl = $("<div>").text("Stargazer Rating: " + response)
         var extrastar = $("<i>").attr("class", "fa fa-star")
 
         $(rating).append(extrastar)

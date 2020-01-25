@@ -1,5 +1,3 @@
-
-
 // variables
 var titles = []
 var tableInfoArray = []
@@ -30,9 +28,12 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
                 var currentRow = $(this).find("th:nth-child(1)");
                 var frameworkName = currentRow.text();
                 var frameworkLink = "https://en.wikipedia.org" + currentRow.children("a").attr("href");
+                var frameworkTitle = "https://en.wikipedia.org" + currentRow.children("a").attr("title");
+
                 frameworkInfo.push({
                     name: frameworkName,
-                    link: frameworkLink
+                    link: frameworkLink,
+                    title: frameworkTitle.replace("https://en.wikipedia.org", "")
                 });
 
             }
@@ -41,6 +42,21 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
     });
 
 }
+
+// function that creates our stargazer statistic 
+function testing(frameWorkName, cb) {
+
+    var newQuery = "https://api.github.com/orgs/" + frameWorkName + "/repos"
+
+    $.ajax({
+        url: newQuery,
+        method: "GET"
+    }).then(function (response) {
+        var results = response[0].stargazers_count
+        cb(results)
+    });
+}
+
 
 // function that creates our framework tables
 function getFrameworkTable(frameworkLink, cb) {
@@ -59,7 +75,6 @@ function getFrameworkTable(frameworkLink, cb) {
         var infoTable = html.find(tableClass);
         var infoTableHeader = html.find(".summary").text()
         var infoTableRows = infoTable.children("tbody").children("tr")
-        console.log(infoTableRows)
 
         infoTableRows.each(function (i) {
 
@@ -122,10 +137,13 @@ $(".button").click(function (event) {
         });
 
         titles.forEach(function (item, i) {
-            var frameworkTitle = $("<tr>").text(titles[i].name).attr("href", titles[i].link);
-            $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework")
 
-            $("#table").append(frameworkTitle);
+            if (titles[i].name != null) {
+                var frameworkTitle = $("<tr>").text(titles[i].name).attr("href", titles[i].link);
+                $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework").attr("title", titles[i].title)
+
+                $("#table").append(frameworkTitle);
+            }
 
         })
     });
@@ -137,23 +155,36 @@ $(".button").click(function (event) {
 $("#table").on("click", ".framework", function () {
     $("#table2").empty()
 
+
     var frameworkLink = $(this).attr("href")
     getFrameworkTable(frameworkLink, function () {
 
-
-        console.log(tableInfoArray)
-
         tableInfoArray.forEach(function (item, i) {
-            var row =$("<tr>").attr("id", "row"+[i]).attr("class", "tabledata")
+            var row = $("<tr>").attr("id", "row" + [i]).attr("class", "tabledata")
             var tableTitle = $("<th>").text(tableInfoArray[i].title);
             var tableInfo = $("<td>").text(tableInfoArray[i].info);
-
             $("#table2").append(row);
-            $("#row"+[i]).append(tableTitle);
-            $("#row"+[i]).append(tableInfo);
+            $("#row" + [i]).append(tableTitle);
+            $("#row" + [i]).append(tableInfo);
 
-
-            console.log("hi")
         })
+
     })
 })
+
+$("#table").on("click", ".framework", function (e) {
+    var currentEl = $(this).text()
+
+    testing(currentEl, function (response) {
+
+        var rating = $("<div>")
+        var starsEl = $("<div>").text(response)
+        var extrastar = $("<i>").attr("class", "fa fa-star")
+
+        $(rating).append(extrastar)
+        $(rating).append(starsEl)
+
+        $(".middle").prepend(rating)
+
+    });
+});

@@ -123,3 +123,12 @@ margin-right: auto;
   text-align: center;
   padding-bottom: 20px
 }
+
+tr.framework:hover {
+  background: #D8D8D8;
+  color: #1A1A1A;
+}
+#mainBody .button:hover {
+  background: rgb(151, 143, 255);
+  color: #1A1A1A;
+}

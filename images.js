@@ -23,13 +23,13 @@ function imageAjax(frameworkTitleEl, cb) {
 $("#table").on("click", ".framework", function () {
     // var title = $(this).attr("title");
     var currentEl = $(this);
-        
+
     imageAjax(currentEl, function (response) {
         imageId = response;
         query2(imageId, function (imageUrl) {
             
-            var frameworkLogo = $("<img>").attr("src", imageUrl)
-            $("#table2").prepend(frameworkLogo)
+            var frameworkLogo = $("<img>").attr("src", imageUrl).attr("class","frameimage")
+            $(".middle").prepend(frameworkLogo)
 
         })
     });

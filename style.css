@@ -1,0 +1,81 @@
+#img-logo {
+    height: 200px;
+    width: 200px;
+}
+  #mainBody {
+    margin-top: 20px;
+  }
+  header {
+    background: #3a3a3a;
+    width: 100%;
+    height: 150px;
+    position: relative;
+  }
+  
+  header .text {
+    font-size: 40px;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding-top: 45px;
+  }
+  #mainBody {
+    display: flex;
+  align-items: center;
+  justify-content: top;
+  height: 100%;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  }
+  #mainBody .button {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% / 5);
+    text-align: center;
+    justify-content: center;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+  }
+  table {
+    display: block;
+  }
+  thead.thead {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 200px);
+    padding: 20px 100px 0 100px;
+  }
+  tr.framework {
+    flex: 1 0 13%;
+    cursor: pointer;
+    background: #3a3a3a;
+    color: #eee;
+    padding: 14px;
+    margin: 5px;
+    border-radius: 6px;
+  }
+  body {
+    margin: 0;
+  }
+
+  .tabledata{
+    color: #fff;
+    font-size: 18px;
+    background: #1a1a1a;
+    text-align: center;
+    padding: 7px 0;
+  }
+  .tabledata:nth-of-type(2n) {
+    background: #3a3a3a;
+  }
+  .centered {
+    display: block;
+  }
+#table2{
+  width: calc(100% - 200px);
+  padding: 20px 100px;
+  background: #fff;
+  min-height: 315px;
+}

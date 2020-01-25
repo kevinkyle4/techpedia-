@@ -117,3 +117,9 @@ margin-right: auto;
   text-align: center;
   padding-top: 20px;
 }
+
+.wikilink {
+  width: 100%;
+  text-align: center;
+  padding-bottom: 20px
+}

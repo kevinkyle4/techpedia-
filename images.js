@@ -12,7 +12,6 @@ function imageAjax(frameworkTitleEl, cb) {
         method: "GET"
     }).then(function (response) {
 
-        console.log(response);
         var pagesProperty = response.query.pages;
         var firstImage = pagesProperty[Object.keys(pagesProperty)[0]].images[0].title;
 
@@ -28,15 +27,14 @@ $("#table").on("click", ".framework", function () {
     imageAjax(currentEl, function (response) {
         imageId = response;
         query2(imageId, function (imageUrl) {
-            console.log("imageUrl: ")
-            console.log(imageUrl);
+        
             var frameworkLogo = $("<img>").attr("src", imageUrl)
             $("#table").prepend(frameworkLogo)
 
         })
     });
 
-    console.log(globalImageURL)
+    
 });
 
 function query2(imageId, cb) {
@@ -47,7 +45,6 @@ function query2(imageId, cb) {
         url: queryURL2,
         method: "GET"
     }).then(function (response) {
-        console.log(response)
         var pagesProperty = response.query.pages;
         var objImageURL = pagesProperty[Object.keys(pagesProperty)[0]].imageinfo[0].url;
 

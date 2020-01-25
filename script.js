@@ -168,6 +168,7 @@ $(".button").click(function (event) {
 // creates a table of basic information based on framework selected.
 $("#table").on("click", ".framework", function () {
     $("#table2").empty()
+    $(".middle").empty()
 
 
     var frameworkLink = $(this).attr("href")
@@ -198,7 +199,7 @@ $("#table").on("click", ".framework", function (e) {
         $(rating).append(extrastar)
         $(rating).append(starsEl)
 
-        $("#table2").prepend(rating)
+        $(".middle").prepend(rating)
 
     });
 });

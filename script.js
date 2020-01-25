@@ -19,6 +19,7 @@ function getFrameworkInfo(wikipediaTableHeaderName, cb) {
         var id = "#" + wikipediaTableHeaderName.replace(" ", "_");
         var javaHeader = html.find(id);
         var javaTableRows = javaHeader.parent().next().next().children("tbody").children("tr");
+        console.log(html)
 
         javaTableRows.each(function (i) {
             //skip the first header that says "Project"
@@ -62,7 +63,7 @@ function getFrameworkTable(frameworkLink, cb) {
     //everything inside of this function works
     var queryURL = "https://cors-anywhere.herokuapp.com/" + frameworkLink
     tableInfoArray = []
-    
+
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -74,14 +75,14 @@ function getFrameworkTable(frameworkLink, cb) {
         var infoTable = html.find(tableClass);
         var infoTableHeader = html.find(".summary").text()
         var infoTableRows = infoTable.children("tbody").children("tr")
-        
+
         infoTableRows.each(function (i) {
-            
+
             //get the text content of each row that we found
             var currentRowTitle = $(this).find("th").text();
             var currentRowInfo = $(this).find("td").text()
 
-            
+
             if (currentRowTitle != "" && currentRowInfo != "") {
                 tableInfoArray.push({
                     title: currentRowTitle,
@@ -89,13 +90,13 @@ function getFrameworkTable(frameworkLink, cb) {
                 });
 
             }
-            
+
         });
-        
+
         cb(tableInfoArray);
-        
+
     });
-    
+
 }
 
 
@@ -104,7 +105,7 @@ function getFrameworkTable(frameworkLink, cb) {
 // function that dynamically creates our buttons on load
 function createButtons(array) {
     var body = $("#mainBody")
-    
+
     $(array).each(function (i) {
         var button = $("<button>").text(array[i])
         button.attr("id", array[i])
@@ -126,60 +127,64 @@ $(".button").click(function (event) {
     event.preventDefault();
     titles = [];
     $("#table").empty()
-    
+
     var id = $(event.target).attr("id");
-    
+
     getFrameworkInfo(id, function (results) {
-        
+
         results.forEach(function (result) {
             titles.push(result);
         });
-        
+
         titles.forEach(function (item, i) {
-            var frameworkTitle = $("<tr>").text(titles[i].name).attr("href", titles[i].link);
-            $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework").attr("title", titles[i].title)
-            
-            $("#table").append(frameworkTitle);
-            
+
+            if (titles[i].name != null) {
+                var frameworkTitle = $("<tr>").text(titles[i].name).attr("href", titles[i].link);
+                $(frameworkTitle).attr("id", titles[i].name).attr("class", "framework").attr("title", titles[i].title)
+
+                $("#table").append(frameworkTitle);
+            }
+
         })
     });
-    
+
 
 })
 
 // creates a table of basic information based on framework selected.
 $("#table").on("click", ".framework", function () {
-    $("#table").empty()
-    
+    $("#table2").empty()
+
+
     var frameworkLink = $(this).attr("href")
     getFrameworkTable(frameworkLink, function () {
-        
+
         tableInfoArray.forEach(function (item, i) {
-            var row = $("<tr>").attr("id", "row" + [i])
+            var row = $("<tr>").attr("id", "row" + [i]).attr("class", "tabledata")
             var tableTitle = $("<th>").text(tableInfoArray[i].title);
             var tableInfo = $("<td>").text(tableInfoArray[i].info);
-            $("#table").append(row);
+            $("#table2").append(row);
             $("#row" + [i]).append(tableTitle);
             $("#row" + [i]).append(tableInfo);
-            
+
         })
 
     })
 })
 
-$("#table").on("click", ".framework", function(e){
+$("#table").on("click", ".framework", function (e) {
     var currentEl = $(this).text()
 
-    testing(currentEl, function(response){
-        
+    testing(currentEl, function (response) {
+
         var rating = $("<div>")
         var starsEl = $("<div>").text(response)
         var extrastar = $("<i>").attr("class", "fa fa-star")
 
         $(rating).append(extrastar)
         $(rating).append(starsEl)
-       
-        $("#table").prepend(rating)
+
+        $("#table2").prepend(rating)
 
     });
 });
